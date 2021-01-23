@@ -32,18 +32,22 @@
 	{#if showBack}
 		<p>{currentCard.back}</p>
 	{/if}
-	<div>
-		{#if showBack}
-			<button on:click={()=>answer(true)}>
-				Right
-			</button>
-			<button on:click={()=>answer(false)}>
-				Wrong
-			</button>
-		{:else}
-			<button on:click={show}> Show </button>
-		{/if}
-	</div>
+	
+	{#if showBack}
+		<button on:click={()=>answer(true)}>
+			Right
+		</button>
+		<button on:click={()=>answer(false)}>
+			Wrong
+		</button>
+	{:else}
+		<button on:click={show}> Show </button>
+	{/if}
+	
 {:else}
-<h1> No more cards to review</h1>
+<h1> No cards to review</h1>
+<p> Review box: </p>
+{#each $boxes as box, i}
+	<button on:click={()=>boxIndex = i}> {i} </button>
+{/each}
 {/if}

@@ -2,12 +2,11 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "web-test-runner \"src/**/*.test.ts\"",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build --repo https://github.com/marcusmmmz/anki-like-app "
+    "test": "web-test-runner \"src/**/*.test.ts\""
   },
   "dependencies": {
-    "svelte": "^3.24.0"
+    "svelte": "^3.24.0",
+    "svelte-spa-router": "^3.1.0"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.5",
@@ -20,7 +19,6 @@
     "@types/snowpack-env": "^2.3.2",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
-    "gh-pages": "^3.1.0",
     "snowpack": "^3.0.1",
     "svelte-preprocess": "^4.0.8",
     "typescript": "^4.0.0"

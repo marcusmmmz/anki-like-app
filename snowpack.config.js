@@ -16,11 +16,10 @@ module.exports = {
   optimize: {
     bundle: true,
     minify: true,
-    target: 'es2017'
+    target: 'es6'
   },
-  "packageOptions": {
-    "source": "remote",
-    "types": true,
+  packageOptions: {
+    /* ... */
   },
   devOptions: {
     /* ... */
