@@ -1,13 +1,21 @@
 <script lang="typescript">
 	import Router from "svelte-spa-router"
 	import routes from "./routes.js"
-	import { deck, Card } from "./services/stores.js";
+	import { deck, Card, Box } from "./services/stores.js";
+	
+	if (!localStorage["deck"]) {
+		$deck.boxes[0].cards = [
+			...$deck.boxes[0].cards,
+			Card("a", "b"),
+			Card("c", "d")
+		]
+		
+		localStorage.setItem("deck", $deck.serialize() )
+	}
+	else {
+		$deck.deserialize( localStorage["deck"] )
+	}
 
-	$deck.boxes[0].cards = [
-		...$deck.boxes[0].cards,
-		new Card("a", "b"),
-		new Card("c", "d")
-	]
 </script>
 
 <div class="App">

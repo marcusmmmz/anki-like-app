@@ -7,8 +7,10 @@
 	function addCard() {
 		$deck.boxes[0].cards = [
 			...$deck.boxes[0].cards,
-			new Card(front, back)
+			Card(front, back)
 		]
+		
+		localStorage["deck"] = $deck.serialize()
 	}
 </script>
 

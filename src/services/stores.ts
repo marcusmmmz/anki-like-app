@@ -1,10 +1,16 @@
 import { Writable, writable } from "svelte/store";
 
-export class Card {
-	constructor(
-		public front = "front",
-		public back = "back",
-	) {}
+interface ISerializable {
+	serialize : () => string
+	deserialize : (serialized_data : string) => void
+}
+
+export type Card = {
+	front : string,
+	back : string,
+}
+export function Card(front : string, back : string) {
+	return {front, back}
 }
 
 export class Box {
@@ -19,8 +25,35 @@ export class Box {
 	) {}
 }
 
-export class Deck {
+export class Deck implements ISerializable {
 	boxes : Box[] = []
+
+	serialize() {
+		let data : Card[][] = []
+		for (const i in this.boxes) {
+			let box = this.boxes[i]
+			data.push( [] )
+
+			for (const card of box.cards) {
+				data[i].push(card)
+			}
+		}
+		return JSON.stringify(data)
+	}
+
+	deserialize(serialized_data : string) {
+		const data = JSON.parse( serialized_data )
+		for (const i in data) {
+			while (this.boxes.length < data.length) {
+				this.boxes.push( new Box() )
+			}
+
+			const box = data[i]
+			for (const card of box) {
+				this.boxes[parseInt(i)].cards.push(card)
+			}
+		}
+	}
 
 	get cards() {
 		let cards = []
