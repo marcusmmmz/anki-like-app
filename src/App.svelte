@@ -1,6 +1,13 @@
 <script lang="typescript">
 	import Router from "svelte-spa-router"
 	import routes from "./routes.js"
+	import { deck, Card } from "./services/stores.js";
+
+	$deck.boxes[0].cards = [
+		...$deck.boxes[0].cards,
+		new Card("a", "b"),
+		new Card("c", "d")
+	]
 </script>
 
 <div class="App">

@@ -1,33 +1,59 @@
 <script>
-	import { boxes } from "../services/cards"
-	export let reviewing = false
+	import { deck, Box } from "../services/stores.js";
 
-	let boxIndex = 0
+	let reviewing = true
 	let showBack = false
 
-	$: currentBox = $boxes[boxIndex]
-	$: currentCard = currentBox[0]
-	$: reviewing = (currentBox.length == 0)
+	let boxIndex = 0
 
-	function answer(right = true) {
-		currentBox.shift()
+	$: currentBox = $deck.boxes[boxIndex]
+	$: currentCard = currentBox.cards[0]
+
+	$: {
+		if (!reviewing) {
+			setTimeout(()=>{
+				boxIndex = $deck.getNextBoxToReview()
+				reviewing = true
+			}, $deck.getNextBoxReviewTime() )
+		}
+	}
+
+	let nextReviewTime = 0
+	function updateNextReviewTime() {
+		nextReviewTime = Math.round($deck.getNextBoxReviewTime() / 1000)
+	}
+	
+	setInterval(updateNextReviewTime, 1000)
+
+	function answer(right : boolean) {
+		currentBox.cards.shift()
 
 		let boxToPut = (right ? boxIndex+1 : 0)
-		$boxes[boxToPut] = [
-			...$boxes[boxToPut],
+
+		if (!$deck.boxes[boxToPut]) $deck.boxes[boxToPut] = new Box()
+
+		$deck.boxes[boxToPut].cards = [
+			...$deck.boxes[boxToPut].cards,
 			currentCard
 		]
+		
+		if (currentBox.cards.length == 0) {
+			currentBox.review()
+
+			if ($deck.getNextBoxReviewTime() < 0) {
+				boxIndex = $deck.getNextBoxToReview()
+			} else {
+				updateNextReviewTime()
+				reviewing = false
+			}
+		}
 
 		showBack = false
 	}
 
-	function show() {
-		showBack = true
-	}
-
 </script>
 
-{#if !reviewing}
+{#if reviewing}
 	<p>{currentCard.front}</p>
 	{#if showBack}
 		<p>{currentCard.back}</p>
@@ -41,13 +67,10 @@
 			Wrong
 		</button>
 	{:else}
-		<button on:click={show}> Show </button>
+		<button on:click={()=>showBack = true}> Show </button>
 	{/if}
 	
 {:else}
-<h1> No cards to review</h1>
-<p> Review box: </p>
-{#each $boxes as box, i}
-	<button on:click={()=>boxIndex = i}> {i} </button>
-{/each}
+	<h1> No cards to review </h1>
+	<p> {nextReviewTime} </p>
 {/if}

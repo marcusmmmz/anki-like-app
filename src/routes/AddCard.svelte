@@ -1,12 +1,12 @@
 <script>
-	import { Card, boxes } from "../services/cards";
+	import { Card, deck } from "../services/stores";
 
 	let front = ""
 	let back = ""
 
 	function addCard() {
-		$boxes[0] = [
-			...$boxes[0],
+		$deck.boxes[0].cards = [
+			...$deck.boxes[0].cards,
 			new Card(front, back)
 		]
 	}
