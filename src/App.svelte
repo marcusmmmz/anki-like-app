@@ -22,6 +22,7 @@
 	<nav>
 		<a href="/#/"><button> Review </button> </a>
 		<a href="/#/cards/add"> <button>Add card</button> </a>
+		<a href="/#/settings"> <button>Settings</button> </a>
 	</nav>
 	<Router {routes}/>
 </div>

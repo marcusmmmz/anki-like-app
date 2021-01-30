@@ -1,8 +1,37 @@
-import { Writable, writable } from "svelte/store";
+import { writable } from "svelte/store";
 
-interface ISerializable {
-	serialize : () => string
-	deserialize : (serialized_data : string) => void
+export class Settings {
+
+	static reviewTimeFunc : (box : number) => number = (box) => {
+		return (2 * (box+3) ) * 1000
+	}
+
+	private static _reviewTimeFormula : string = "(2 * (box+3) ) * 1000"
+	
+	static set reviewTimeFormula(value : string) {
+		this._reviewTimeFormula = value
+		this.reviewTimeFunc = eval(`(box)=>{return ${this.reviewTimeFormula}}`)
+	}
+
+	static get reviewTimeFormula() {
+		return this._reviewTimeFormula
+	}
+
+	// static get reviewTimeFunc() : (box : number) => number {
+	// 	return eval(`(box)=>{return ${this.reviewTimeFormula}}`)
+	// }
+
+	static save() {
+		localStorage.settings = JSON.stringify({
+			reviewTimeFormula: this.reviewTimeFormula
+		})
+	}
+
+	static load() {
+		const data = JSON.parse(localStorage.settings)
+
+		this.reviewTimeFormula = data.reviewTimeFormula
+	}
 }
 
 export type Card = {
@@ -25,7 +54,7 @@ export class Box {
 	) {}
 }
 
-export class Deck implements ISerializable {
+export class Deck {
 	boxes : Box[] = []
 
 	serialize() {
@@ -70,7 +99,7 @@ export class Deck implements ISerializable {
 	}
 
 	getBoxReviewTime(box : number) {
-		return (2 * (box+3) ) * 1000
+		return Settings.reviewTimeFunc(box)
 	}
 
 	getNextBoxToReview() {
@@ -113,5 +142,5 @@ export class Deck implements ISerializable {
 	}
 }
 
-export let deck : Writable<Deck> = writable( new Deck() )
+export let deck = writable( new Deck() )
 
