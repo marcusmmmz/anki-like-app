@@ -21,7 +21,7 @@
 <div class="App">
 	<nav>
 		<a href="/#/"><button> Review </button> </a>
-		<a href="/#/cards/add"> <button>Add card</button> </a>
+		<a href="/#/cards/"> <button>Manage cards</button> </a>
 		<a href="/#/settings"> <button>Settings</button> </a>
 	</nav>
 	<Router {routes}/>
