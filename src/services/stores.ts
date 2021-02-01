@@ -128,6 +128,9 @@ export class Deck {
 
 	getNextBoxReviewTime() {
 		const box = this.getNextBoxToReview()
+
+		if (box == -1) return -1
+		
 		const time = (
 			this.boxes[box].lastReview
 			+ this.getBoxReviewTime(box)

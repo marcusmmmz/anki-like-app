@@ -5,6 +5,8 @@
 		$deck.boxes[box].cards = $deck.boxes[box].cards.filter(
 			(card, i) => i != index
 		)
+
+		$deck.save()
 	}
 </script>
 

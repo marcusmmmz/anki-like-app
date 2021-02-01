@@ -1,29 +1,24 @@
 <script>
+	import { onDestroy, onMount } from "svelte";
+
 	import { deck, Box } from "../services/stores.js";
 
 	let reviewing = false
 	let showBack = false
 
-	let boxIndex = 0
+	let boxIndex = $deck.getNextBoxToReview()
 
 	$: currentBox = $deck.boxes[boxIndex]
 	$: currentCard = currentBox.cards[0]
 
-	$: {
-		if (!reviewing) {
-			setTimeout(()=>{
-				boxIndex = $deck.getNextBoxToReview()
-				reviewing = true
-			}, $deck.getNextBoxReviewTime() )
-		}
-	}
-
 	let nextReviewTime = 0
 	function updateNextReviewTime() {
 		nextReviewTime = Math.round($deck.getNextBoxReviewTime() / 1000)
+
+		if (nextReviewTime < 0 && currentCard) {
+			reviewing = true
+		}
 	}
-	
-	setInterval(updateNextReviewTime, 1000)
 
 	function answer(right : boolean) {
 		currentBox.cards.shift()
@@ -45,6 +40,7 @@
 			} else {
 				updateNextReviewTime()
 				reviewing = false
+				boxIndex = $deck.getNextBoxToReview()
 			}
 
 			$deck.save()
@@ -52,6 +48,16 @@
 
 		showBack = false
 	}
+
+	let nextReviewIntervalID : NodeJS.Timeout
+	onMount(()=>{
+		updateNextReviewTime()
+		nextReviewIntervalID = setInterval(updateNextReviewTime, 1000)
+	})
+
+	onDestroy(()=>{
+		clearInterval( nextReviewIntervalID )
+	})
 
 </script>
 
