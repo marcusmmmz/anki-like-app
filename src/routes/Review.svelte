@@ -1,6 +1,4 @@
 <script>
-import { onMount } from "svelte";
-
 	import { deck, Box } from "../services/stores.js";
 
 	let reviewing = false
@@ -49,7 +47,7 @@ import { onMount } from "svelte";
 				reviewing = false
 			}
 
-			localStorage["deck"] = $deck.serialize()
+			$deck.save()
 		}
 
 		showBack = false

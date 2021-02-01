@@ -57,7 +57,7 @@ export class Box {
 export class Deck {
 	boxes : Box[] = []
 
-	serialize() {
+	save() {
 		let data : Card[][] = []
 		for (const i in this.boxes) {
 			let box = this.boxes[i]
@@ -67,11 +67,12 @@ export class Deck {
 				data[i].push(card)
 			}
 		}
-		return JSON.stringify(data)
+		localStorage.deck = JSON.stringify(data)
 	}
 
-	deserialize(serialized_data : string) {
-		const data = JSON.parse( serialized_data )
+	load() {
+		const data : Card[][] = JSON.parse(localStorage.deck)
+		
 		for (const i in data) {
 			while (this.boxes.length < data.length) {
 				this.boxes.push( new Box() )

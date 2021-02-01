@@ -10,7 +10,7 @@
 			Card(front, back)
 		]
 		
-		localStorage["deck"] = $deck.serialize()
+		$deck.save()
 	}
 </script>
 

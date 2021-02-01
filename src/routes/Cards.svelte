@@ -1,5 +1,5 @@
 <script>
-	import {  deck } from "../services/stores.js"
+	import { deck } from "../services/stores.js"
 
 	function removeCard(box : number, index : number) {
 		$deck.boxes[box].cards = $deck.boxes[box].cards.filter(
