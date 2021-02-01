@@ -1,6 +1,8 @@
 <script>
 	import { Card, deck } from "../services/stores";
 
+	let alert = false
+
 	let front = ""
 	let back = ""
 
@@ -9,6 +11,8 @@
 			...$deck.boxes[0].cards,
 			Card(front, back)
 		]
+
+		alert = true
 		
 		$deck.save()
 	}
@@ -18,3 +22,6 @@
 <input bind:value={front} type="text" placeholder="front"> <br>
 <input bind:value={back} type="text" placeholder="back"> <br>
 <button on:click={addCard}> Add card </button>
+{#if alert}
+	<p>Card added!</p>
+{/if}
