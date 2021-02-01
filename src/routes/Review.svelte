@@ -25,7 +25,7 @@
 
 		let boxToPut = (right ? boxIndex+1 : 0)
 
-		if (!$deck.boxes[boxToPut]) $deck.boxes[boxToPut] = new Box()
+		if (!$deck.boxes[boxToPut]) $deck.boxes[boxToPut] = Box()
 
 		$deck.boxes[boxToPut].cards = [
 			...$deck.boxes[boxToPut].cards,
@@ -33,7 +33,7 @@
 		]
 		
 		if (currentBox.cards.length == 0) {
-			currentBox.review()
+			currentBox.lastReview = Date.now()
 
 			if ($deck.getNextBoxReviewTime() < 0) {
 				boxIndex = $deck.getNextBoxToReview()

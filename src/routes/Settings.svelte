@@ -3,17 +3,7 @@
 
     let reviewTime = Settings.reviewTimeFormula
 
-    $: {
-        try {
-            // this is here to prevent invalid code
-            // from going to the Settings
-            eval(`(box)=>{return ${reviewTime}}`)
-            Settings.reviewTimeFormula = reviewTime
-            Settings.save()
-        } catch (error) {
-            console.log( error );
-        }
-    }
+    $: Settings.reviewTimeFormula = reviewTime
 
     function clear() {
         localStorage.clear()
