@@ -16,6 +16,8 @@
 		if (!$currentCard) return;
 
 		db.cards.delete($currentCard.id);
+
+		showBack = false;
 	}
 
 	function answer(isCorrect: boolean) {
