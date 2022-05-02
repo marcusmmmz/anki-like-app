@@ -12,6 +12,12 @@
 
 	let showBack = false;
 
+	function deleteCurrentCard() {
+		if (!$currentCard) return;
+
+		db.cards.delete($currentCard.id);
+	}
+
 	function answer(isCorrect: boolean) {
 		if (!$currentCard) throw new Error("currentCard shouldn't be undefined");
 
@@ -66,6 +72,7 @@
 	{#if showBack}
 		<button on:click={() => answer(true)}> Right </button>
 		<button on:click={() => answer(false)}> Wrong </button>
+		<button on:click={deleteCurrentCard}>Delete</button>
 	{:else}
 		<button on:click={() => (showBack = true)}> Show </button>
 	{/if}
