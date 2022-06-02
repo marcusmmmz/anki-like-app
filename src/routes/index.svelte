@@ -24,7 +24,5 @@
 
 <h1>Welcome to Anki-Like App!</h1>
 <p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, vero minima,
-	cupiditate necessitatibus praesentium sed dicta quisquam accusamus numquam
-	deserunt delectus animi, atque cumque dolor temporibus harum eum amet eius!
+	Feito pelo Marcus do 9º3 e sim tá inglês pq eu quero agora para de encher o saco lol
 </p>
