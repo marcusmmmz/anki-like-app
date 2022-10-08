@@ -6,37 +6,6 @@
 </nav>
 <slot />
 
-<!-- <style>
-	:global(body) {
-		margin: 0;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 5vmin;
-		word-wrap: break-word;
-
-		background-color: rgb(34, 34, 40);
-		color: rgb(245, 245, 245);
-		text-align: center;
-	}
-	:global(#svelte) {
-		height: 100vh;
-		width: 100vw;
-	}
-	nav {
-		height: 10%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 10px;
-	}
-	nav a {
-		height: 50%;
-		width: 25%;
-	}
-	nav button {
-		height: 100%;
-		width: 100%;
-	}
-</style> -->
 <style>
 	:global(body) {
 		margin: 0;

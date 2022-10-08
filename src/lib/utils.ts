@@ -1,4 +1,4 @@
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 import { liveQuery, type PromiseExtended } from "dexie";
 import {
 	derived,
@@ -9,7 +9,7 @@ import {
 	type Updater,
 } from "svelte/store";
 
-export function useLiveQuery<T extends any>(query: () => PromiseExtended<T>) {
+export function useLiveQuery<T>(query: () => PromiseExtended<T>) {
 	if (!browser) return readable<T | undefined>();
 
 	const _liveQuery = liveQuery(() => query());

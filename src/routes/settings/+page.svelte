@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { db } from "$lib/db";
 	import { settings } from "$lib/stores";
-	import { exportDB } from "dexie-export-import";
 	import download from "downloadjs";
+	import { onMount } from "svelte";
 
 	let reviewTime = $settings.reviewTimeFormula;
 
@@ -21,8 +21,9 @@
 		await db.import(file);
 	}
 	async function exportData() {
-		let exported = await exportDB(db);
-		download(exported, "ala_data.json", "text/plain");
+		let data = await db.export();
+
+		download(data, "ala_data.json", "text/plain");
 	}
 
 	function onImportChange(
@@ -31,10 +32,15 @@
 		}
 	) {
 		let file = e.currentTarget.files?.item(0);
-		if (file) {
-			importData(file);
-		}
+
+		if (!file) return;
+
+		importData(file);
 	}
+
+	onMount(async () => {
+		await import("dexie-export-import");
+	});
 </script>
 
 <button on:click={settings.clear}> Reset settings </button>
